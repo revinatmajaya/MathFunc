@@ -16,6 +16,7 @@ template<typename T> class List {
     Node<T>* head;
     Node<T>* tail;
 
+    List();
     List(Node<T>* node);
     void add(T value);
     void print();
