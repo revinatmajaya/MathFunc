@@ -2,44 +2,60 @@
 #include <iostream>
 #include "./../linkedList.cpp"
 
-// an abstract class for now, i don't know what to do with this
-class MathObj{
-    public:
-    virtual int evaluate(const int x) = 0;
-    virtual void print() = 0;
-};
-
-// this will only handle one variable for now
-// class MathFunc : MathObj{
-//     private:
-//     List<MathFunc> mathFunctions;
-//     int coefficient;
-//     int power;
-
-//     public:
-//     MathFunc(DummyVar* var);
-//     MathFunc(DummyVar* var, const int coefficient);
-//     MathFunc(DummyVar* var, const int coefficient, const int power);
-//     int evaluate(const int x);
-// };
-
 // variable used in the function
 // may be used over and over again in more than one function.
-class DummyVar : MathObj{
-    private:
+class DummyVar{
+    public:
+    char name;
+    // static List<char>* availableNames;
+
+    DummyVar();
+    DummyVar(const char name);
+    void setName(const char name){ this->name = name; }
+};
+
+// one variable function
+class MathFunc{
+    public:
+    List<MathFunc*>* mathFunctions;
     int coefficient;
     int power;
     char name;
+    /*
+    0 = +
+    1 = -
+    2 = *
+    3 = /
+    */
+    int operat;
+    DummyVar* var;
 
-    public:
-    // static List<char> usedNames;
-    // DummyVar();
-    static List<char>* availableNames;
-    DummyVar(const char name);
-    DummyVar(const char name, const int coefficient, const int power);
-    
+    // static List<char>* availableNames;
+
+    MathFunc();
+    MathFunc(const char name, DummyVar* var);
+    MathFunc(const char name, DummyVar* var, const int coefficient);
+    MathFunc(const char name, DummyVar* var, const int coefficient, const int power);
+
     int evaluate(const int x);
     void print();
-};
 
-List<char>* DummyVar::availableNames = new List<char>();
+    // setter
+
+    void setFuncList(List<MathFunc*> *list){ this->mathFunctions = list; }
+    void setName(const char name){ this->name = name; }
+    void setVar(DummyVar* var){ this->var = var; }
+    void setCoefficient(const int coefficient){ this->coefficient = coefficient; }
+    void setPower(const int power){ this->power = power; }
+    void setOperator(const int o){ this->operat = o; }
+
+    // template yang bisa generic jumlah
+    // void addFunctions()
+
+    // operators
+    
+    MathFunc operator+(MathFunc* const g);
+    MathFunc operator-(MathFunc* const g);
+    MathFunc operator*(MathFunc* const g);
+    MathFunc operator/(MathFunc* const g);
+};
